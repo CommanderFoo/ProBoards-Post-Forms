@@ -48,8 +48,7 @@ ProBoards_Post_Forms.settings = class {
 
 		 		input: [],
 				drop_down: [],
-				checkbox: [],
-				radio: [],
+				checkbox_radio: [],
 				misc: []
 
 		 	};
@@ -78,21 +77,11 @@ ProBoards_Post_Forms.settings = class {
 
 			 // Fetch all checkboxes for this form
 
-			 let checkboxes = settings.checkboxes;
+			 let checkboxes_radios = settings.checkboxes_radios;
 
-			 for(let e = 0, el = checkboxes.length; e < el; ++ e){
-				 if(this.form_related(form.unique_id, checkboxes[e].form_ids)){
-					 form.elementscheckbox.push(checkboxes[e]);
-				 }
-			 }
-
-			 // Fetch all radios for this form
-
-			 let radios = settings.radios;
-
-			 for(let e = 0, el = radios.length; e < el; ++ e){
-				 if(this.form_related(form.unique_id, radios[e].form_ids)){
-					 form.elements.radio.push(radios[e]);
+			 for(let e = 0, el = checkboxes_radios.length; e < el; ++ e){
+				 if(this.form_related(form.unique_id, checkboxes_radios[e].form_ids)){
+					 form.elements.checkbox_radio.push(checkboxes_radios[e]);
 				 }
 			 }
 
@@ -108,7 +97,7 @@ ProBoards_Post_Forms.settings = class {
 
 			 // No elements?  null out the form variable.
 
-			 if(!form.elements.input || !form.elements.drop_down || !form.elements.checkbox || !form.elements.radio || !form.elements.misc){
+			 if(!form.elements.input || !form.elements.drop_down || !form.elements.checkbox_radio || !form.elements.misc){
 			 	form = null;
 			 }
 		 }
