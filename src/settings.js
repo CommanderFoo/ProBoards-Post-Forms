@@ -16,25 +16,30 @@ ProBoards_Post_Forms.settings = class {
 		}
 	}
 
-	// Prevent creating a lookup from the start, just look for the form directly when needed.
-	// A little more performant, as it will only run on post pages based on board id matching.
+	// Fetch form for a specific board
 
-	static fetch_form_data(board_id = 0){
-		let settings = ProBoards_Post_Forms.SETTINGS;
-		let forms = settings.forms;
+	static fetch_form(board_id = 0){
+		let forms = ProBoards_Post_Forms.SETTINGS.forms;
 		let form = null;
 
-		 for(let f = 0, fl = forms.length; f < fl; ++ f){
-			 if(!forms[f].unique_id || !forms[f].enabled){
-		 		continue;
-		 	}
+		for(let f = 0, fl = forms.length; f < fl; ++ f){
+			if(!forms[f].unique_id || !forms[f].enabled){
+				continue;
+			}
 
-			 if(forms[f].boards.find(id => parseInt(id, 10) == board_id)){
+			if(forms[f].boards.find(id => parseInt(id, 10) == board_id)){
 				form = forms[f];
 
 				break;
-			 }
-		 }
+			}
+		}
+
+		return form;
+	}
+
+	// Fetch form elements.
+
+	static fetch_all_form_data(form = null){
 
 		 // Check if we have a form.  If we do, grab all elements for this form.
 
@@ -48,6 +53,8 @@ ProBoards_Post_Forms.settings = class {
 				misc: []
 
 		 	};
+
+		 	let settings = ProBoards_Post_Forms.SETTINGS;
 
 		 	// Fetch all input fields for this form
 
