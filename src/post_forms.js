@@ -6,6 +6,8 @@ class ProBoards_Post_Forms {
 		this.PLUGIN = null;
 		this.SETTINGS = null;
 
+		this.route = pb.data("route");
+
 		this.settings.init();
 
 		if(!this.SETTINGS){
@@ -21,11 +23,11 @@ class ProBoards_Post_Forms {
 
 		let posting_location_check = (
 
-			pb.data("route").name == "quote_posts" ||
-			pb.data("route").name == "new_post" ||
-			pb.data("route").name == "new_thread" ||
-			pb.data("route").name == "edit_post" ||
-			pb.data("route").name == "edit_thread"
+			this.route.name == "quote_posts" ||
+			this.route.name == "new_post" ||
+			this.route.name == "new_thread" ||
+			this.route.name == "edit_post" ||
+			this.route.name == "edit_thread"
 
 		);
 
@@ -47,7 +49,7 @@ class ProBoards_Post_Forms {
 				let form_data = this.settings.fetch_all_form_data(form);
 
 				if(form_data){
-					console.log(form_data);
+					new this.Form(form_data).render();
 				}
 			}
 		}
