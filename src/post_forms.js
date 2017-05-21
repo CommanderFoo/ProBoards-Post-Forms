@@ -62,35 +62,35 @@ class ProBoards_Post_Forms {
 			for(let i = 0, l = locations.length; i < l; ++ i){
 				switch(parseInt(locations[i], 10)){
 
-					case 1:
+					case 1 :
 						if(route == "edit_post"){
 							return true;
 						}
 
 						break;
 
-					case 2:
+					case 2 :
 						if(route == "edit_thread"){
 							return true;
 						}
 
 						break;
 
-					case 3:
+					case 3 :
 						if(route == "new_thread"){
 							return true;
 						}
 
 						break;
 
-					case 4:
+					case 4 :
 						if(route == "new_post"){
 							return true;
 						}
 
 						break;
 
-					case 5:
+					case 5 :
 						if(route == "quote_posts"){
 							return true;
 						}

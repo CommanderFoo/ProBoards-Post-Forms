@@ -10,14 +10,7 @@ ProBoards_Post_Forms.Form = class {
 		this.$pb_form = this.$wysiwyg_container.find("form:first");
 		this.$pb_submit = this.$pb_form.find("input[type=submit]");
 
-		this.build_elements();
-		this.create_submit_button();
-	}
-
-	build_elements(){
-		console.log(this.form_data);
-
-		let inputs = this.build_inputs();
+		this.build_form();
 	}
 
 	build_inputs(){
@@ -40,9 +33,21 @@ ProBoards_Post_Forms.Form = class {
 		this.$wrapper.append($button);
 	}
 
+	build_form(){
+		let html = "";
+		let inputs = this.build_inputs();
+
+		console.log(inputs);
+		for(let i = 0; i < inputs.length; ++ i){
+			html += inputs[i].label + inputs[i].field + "<br />";
+		}
+
+		this.$wrapper.html(html);
+	}
+
 	render(){
 		this.$title.html(this.form_data.title);
-		this.$pb_form.find("form:first").hide();
+		this.$pb_form.hide();
 		this.$content_container.append(this.$wrapper);
 	}
 
