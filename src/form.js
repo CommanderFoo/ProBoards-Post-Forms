@@ -23,6 +23,26 @@ ProBoards_Post_Forms.Form = class {
 		return inputs;
 	}
 
+	build_drop_downs(){
+		let drop_downs = [];
+
+		for(let i = 0, l = this.form_data.elements.drop_down.length; i < l; ++ i){
+			drop_downs.push(new ProBoards_Post_Forms.Drop_Down(this.form_data.elements.drop_down[i]));
+		}
+
+		return drop_downs;
+	}
+
+	build_checkboxes_radios(){
+		let checkboxes_radios = [];
+
+		for(let i = 0, l = this.form_data.elements.checkbox_radio.length; i < l; ++ i){
+			checkboxes_radios.push(new ProBoards_Post_Forms.Checkbox_Radio(this.form_data.elements.checkbox_radio[i]));
+		}
+
+		return checkboxes_radios;
+	}
+
 	create_submit_button(){
 		let $button = $("<button>Submit Form</button>");
 
@@ -33,13 +53,24 @@ ProBoards_Post_Forms.Form = class {
 		this.$wrapper.append($button);
 	}
 
+	// @TODO: ordering
+
 	build_form(){
 		let html = "";
 		let inputs = this.build_inputs();
+		let drop_downs = this.build_drop_downs();
+		let checkboxes_radios = this.build_checkboxes_radios();
 
-		console.log(inputs);
 		for(let i = 0; i < inputs.length; ++ i){
 			html += inputs[i].label + inputs[i].field + "<br />";
+		}
+
+		for(let i = 0; i < drop_downs.length; ++ i){
+			html += drop_downs[i].label + drop_downs[i].field + "<br />";
+		}
+
+		for(let i = 0; i < checkboxes_radios.length; ++ i){
+			html += checkboxes_radios[i].label + checkboxes_radios[i].field + "<br />";
 		}
 
 		this.$wrapper.html(html);
