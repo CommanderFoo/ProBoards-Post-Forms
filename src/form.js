@@ -33,11 +33,32 @@ ProBoards_Post_Forms.Form = class {
 		return drop_downs;
 	}
 
+	// Handle group collection here before creating lonely ones :P
+
 	build_checkboxes_radios(){
 		let checkboxes_radios = [];
+		let group_checkboxes_radios = {};
 
 		for(let i = 0, l = this.form_data.elements.checkbox_radio.length; i < l; ++ i){
-			checkboxes_radios.push(new ProBoards_Post_Forms.Checkbox_Radio(this.form_data.elements.checkbox_radio[i]));
+			let the_input = this.form_data.elements.checkbox_radio[i];
+
+			if(the_input.group_id.length){
+				if(!group_checkboxes_radios[the_input.group_id]){
+					group_checkboxes_radios[the_input.group_id] = [];
+				}
+
+				group_checkboxes_radios[the_input.group_id].push(the_input);
+			} else {
+				checkboxes_radios.push(new ProBoards_Post_Forms.Checkbox_Radio(the_input));
+			}
+		}
+
+		if(group_checkboxes_radios){
+			for(let id in group_checkboxes_radios){
+				if(group_checkboxes_radios.hasOwnProperty(id)){
+					checkboxes_radios.push(new ProBoards_Post_Forms.Checkbox_Radio_Group(group_checkboxes_radios[id]));
+				}
+			}
 		}
 
 		return checkboxes_radios;
