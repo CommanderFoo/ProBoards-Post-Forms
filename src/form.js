@@ -33,8 +33,6 @@ ProBoards_Post_Forms.Form = class {
 		return drop_downs;
 	}
 
-	// Handle group collection here before creating lonely ones :P
-
 	build_checkboxes_radios(){
 		let checkboxes_radios = [];
 		let group_checkboxes_radios = {};
@@ -53,6 +51,8 @@ ProBoards_Post_Forms.Form = class {
 			}
 		}
 
+		// Grouping
+
 		if(group_checkboxes_radios){
 			for(let id in group_checkboxes_radios){
 				if(group_checkboxes_radios.hasOwnProperty(id)){
@@ -62,6 +62,20 @@ ProBoards_Post_Forms.Form = class {
 		}
 
 		return checkboxes_radios;
+	}
+
+	build_misc(){
+		let misc = [];
+console.log(this.form_data.elements);
+		for(let i = 0, l = this.form_data.elements.misc.length; i < l; ++ i){
+			if(this.form_data.elements.misc[i].field_type == 1){
+
+			} else if(this.form_data.elements.misc[i].field_type == 2){
+				misc.push(new ProBoards_Post_Forms.Date_Picker(this.form_data.elements.misc[i]));
+			}
+		}
+
+		return misc;
 	}
 
 	create_submit_button(){
@@ -81,6 +95,7 @@ ProBoards_Post_Forms.Form = class {
 		let inputs = this.build_inputs();
 		let drop_downs = this.build_drop_downs();
 		let checkboxes_radios = this.build_checkboxes_radios();
+		let misc = this.build_misc();
 
 		for(let i = 0; i < inputs.length; ++ i){
 			html += inputs[i].label + inputs[i].field + "<br />";
@@ -94,7 +109,13 @@ ProBoards_Post_Forms.Form = class {
 			html += checkboxes_radios[i].label + checkboxes_radios[i].field + "<br />";
 		}
 
+		for(let i = 0; i < misc.length; ++ i){
+			html += misc[i].label + misc[i].field + "<br />";
+		}
+
 		this.$wrapper.html(html);
+
+		//this.$wrapper.find("input.date").datepicker();
 	}
 
 	render(){
