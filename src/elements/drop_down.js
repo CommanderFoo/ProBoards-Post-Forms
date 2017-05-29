@@ -12,7 +12,6 @@ ProBoards_Post_Forms.Drop_Down = class extends ProBoards_Post_Forms.Element {
 	}
 
 	create_field(){
-		console.dir(this.data);
 		let multiple = (parseInt(this.data.multiple, 10) == 1)? " multiple='multiple'" : "";
 		let size = (parseInt(this.data.multiple_size, 10))? parseInt(this.data.multiple_size, 10) : 1;
 
@@ -26,7 +25,15 @@ ProBoards_Post_Forms.Drop_Down = class extends ProBoards_Post_Forms.Element {
 		let options_html = (this.data.multiple)? "" : "<option value=''> </option>";
 
 		for(let o = 0, ol = options.length; o < ol; ++ o){
-			options_html += "<option value='" + o + "'>" + options[o] + "</option>";
+			if(options[o].match(/^\[group=(.+)?\]/i)){
+				let label = RegExp.$1;
+
+				options_html += "<optgroup label='" + pb.text.escape_html(label) + "'>";
+			} else if(options[o].toLowerCase() == "[/group]"){
+				options_html += "</optgroup>";
+			} else {
+				options_html += "<option value='" + o + "'>" + options[o] + "</option>";
+			}
 		}
 
 		return options_html;
