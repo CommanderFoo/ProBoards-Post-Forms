@@ -17,6 +17,8 @@ ProBoards_Post_Forms.Checkbox_Radio_Group = class extends ProBoards_Post_Forms.E
 	create_field(){
 		let html = "";
 
+		ProBoards_Post_Forms.sort_by_order(this.data, true);
+
 		for(let f = 0, fl = this.data.length; f < fl; ++ f){
 			html += this.data[f].name + ": ";
 

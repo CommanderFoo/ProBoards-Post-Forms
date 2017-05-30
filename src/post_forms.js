@@ -106,4 +106,37 @@ class ProBoards_Post_Forms {
 		return true;
 	}
 
+	static sort_by_order(fields, no_data_property = false){
+		fields.sort((a, b) => {
+			let a_order = null;
+			let b_order = null;
+
+			if(no_data_property){
+				a_order = (a.order)? parseInt(a.order, 10) : null;
+				b_order = (b.order)? parseInt(b.order, 10) : null;
+			} else {
+				a_order = (a.data.order)? parseInt(a.data.order, 10) : null;
+				b_order = (b.data.order)? parseInt(b.data.order, 10) : null;
+			}
+
+			if(a_order === null && b_order === null){
+				return 0;
+			} else {
+				if(a_order === null){
+					return 1;
+				} else if(b_order === null){
+					return 0;
+				} else {
+					if(a_order < b_order){
+						return -1;
+					} else if(b_order < a_order){
+						return 1
+					} else {
+						return 0;
+					}
+				}
+			}
+		});
+	}
+
 }

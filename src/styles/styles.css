@@ -3,3 +3,9 @@ div.pd-post-form select {
 	height: auto;
 
 }
+
+div#pd-post-form {
+
+	padding-bottom: 10px;
+
+}

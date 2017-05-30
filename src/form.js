@@ -2,6 +2,7 @@ ProBoards_Post_Forms.Form = class {
 
 	constructor(form = {}){
 		this.form_data = form;
+		this.has_elements = false;
 		this.$wrapper = $("<div id='pd-post-form' class='pd-post-form post-form-" + this.form_data.unique_id + "'></div>");
 
 		this.$wysiwyg_container = $(".wysiwyg-area");
@@ -66,12 +67,10 @@ ProBoards_Post_Forms.Form = class {
 
 	build_misc(){
 		let misc = [];
-console.log(this.form_data.elements);
+
 		for(let i = 0, l = this.form_data.elements.misc.length; i < l; ++ i){
 			if(this.form_data.elements.misc[i].field_type == 1){
-
-			} else if(this.form_data.elements.misc[i].field_type == 2){
-				misc.push(new ProBoards_Post_Forms.Date_Picker(this.form_data.elements.misc[i]));
+				misc.push(new ProBoards_Post_Forms.Color_Picker(this.form_data.elements.misc[i]));
 			}
 		}
 
@@ -88,40 +87,53 @@ console.log(this.form_data.elements);
 		this.$wrapper.append($button);
 	}
 
-	// @TODO: ordering
-
 	build_form(){
 		let html = "";
-		let inputs = this.build_inputs();
-		let drop_downs = this.build_drop_downs();
-		let checkboxes_radios = this.build_checkboxes_radios();
-		let misc = this.build_misc();
+		let form_fields = [];
 
-		for(let i = 0; i < inputs.length; ++ i){
-			html += inputs[i].label + inputs[i].field + "<br />";
+		form_fields = form_fields.concat(this.build_inputs());
+		form_fields = form_fields.concat(this.build_drop_downs());
+		form_fields = form_fields.concat(this.build_checkboxes_radios());
+		form_fields = form_fields.concat(this.build_misc());
+
+		ProBoards_Post_Forms.sort_by_order(form_fields);
+
+		if(!form_fields.length){
+			return;
 		}
 
-		for(let i = 0; i < drop_downs.length; ++ i){
-			html += drop_downs[i].label + drop_downs[i].field + "<br />";
-		}
+		this.has_elements = true;
 
-		for(let i = 0; i < checkboxes_radios.length; ++ i){
-			html += checkboxes_radios[i].label + checkboxes_radios[i].field + "<br />";
-		}
-
-		for(let i = 0; i < misc.length; ++ i){
-			html += misc[i].label + misc[i].field + "<br />";
+		for(let i = 0; i < form_fields.length; ++ i){
+			html += form_fields[i].label + form_fields[i].field + "<br />";
 		}
 
 		this.$wrapper.html(html);
 
-		//this.$wrapper.find("input.date").datepicker();
+		this.$wrapper.find("input.post-form-color-picker").colorPicker({
+
+			hex: "000000",
+			allowTransparent: true,
+			autoOpen: false,
+			autoUpdate: false,
+			update: function(value){
+				$(this).val("#" + value);
+				$(this).colorPicker("hide");
+			}
+
+		}).on("click", function(){
+			$(this).colorPicker("open");
+		});
 	}
 
+	// Only render form if there are elements
+
 	render(){
-		this.$title.html(this.form_data.title);
-		this.$pb_form.hide();
-		this.$content_container.append(this.$wrapper);
+		if(this.has_elements){
+			this.$title.html(this.form_data.title);
+			this.$pb_form.hide();
+			this.$content_container.append(this.$wrapper);
+		}
 	}
 
 };
