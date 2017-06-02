@@ -49,6 +49,7 @@ ProBoards_Post_Forms.settings = class {
 		 		input: [],
 				drop_down: [],
 				checkbox_radio: [],
+				numbers: [],
 				misc: []
 
 		 	};
@@ -85,6 +86,16 @@ ProBoards_Post_Forms.settings = class {
 				 }
 			 }
 
+			 // Fetch all number fields for this form
+
+			 let numbers = settings.numbers;
+
+			 for(let e = 0, el = numbers.length; e < el; ++ e){
+				 if(this.form_related(form.unique_id, numbers[e].form_ids)){
+					 form.elements.numbers.push(numbers[e]);
+				 }
+			 }
+
 			 // Fetch all misc elements for this form
 
 			 let misc = settings.misc;
@@ -99,10 +110,26 @@ ProBoards_Post_Forms.settings = class {
 
 			 if(!form.elements.input || !form.elements.drop_down || !form.elements.checkbox_radio || !form.elements.misc){
 			 	form = null;
+			 } else {
+			 	form.template = this.fetch_form_template(form.unique_id);
 			 }
 		 }
 
 		 return form;
+	}
+
+	static fetch_form_template(form_id){
+		let template = null;
+		let templates = ProBoards_Post_Forms.SETTINGS.templates;
+
+		for(let t = 0, tl = templates.length; t < tl; ++ t){
+			if(templates[t].form_id == form_id){
+				template = templates[t].template;
+				break;
+			}
+		}
+
+		return template;
 	}
 
 	// Elements can be shared between forms, so the input may contain

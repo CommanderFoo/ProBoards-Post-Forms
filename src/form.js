@@ -12,6 +12,8 @@ ProBoards_Post_Forms.Form = class {
 		this.$pb_submit = this.$pb_form.find("input[type=submit]");
 
 		this.build_form();
+
+		console.log(form.template);
 	}
 
 	build_inputs(){
@@ -77,6 +79,16 @@ ProBoards_Post_Forms.Form = class {
 		return misc;
 	}
 
+	build_number_inputs(){
+		let number_inputs = [];
+
+		for(let i = 0, l = this.form_data.elements.numbers.length; i < l; ++ i){
+			number_inputs.push(new ProBoards_Post_Forms.Number_Input(this.form_data.elements.numbers[i]));
+		}
+
+		return number_inputs;
+	}
+
 	create_submit_button(){
 		let $button = $("<button>Submit Form</button>");
 
@@ -87,13 +99,20 @@ ProBoards_Post_Forms.Form = class {
 		this.$wrapper.append($button);
 	}
 
+	create_reset_button(){
+		let $button = $("<input type='reset' value='Reset' />");
+
+		this.$wrapper.append($button);
+	}
+
 	build_form(){
-		let html = "";
+		let $html = $("<div></div>");
 		let form_fields = [];
 
 		form_fields = form_fields.concat(this.build_inputs());
 		form_fields = form_fields.concat(this.build_drop_downs());
 		form_fields = form_fields.concat(this.build_checkboxes_radios());
+		form_fields = form_fields.concat(this.build_number_inputs());
 		form_fields = form_fields.concat(this.build_misc());
 
 		ProBoards_Post_Forms.sort_by_order(form_fields);
@@ -105,10 +124,12 @@ ProBoards_Post_Forms.Form = class {
 		this.has_elements = true;
 
 		for(let i = 0; i < form_fields.length; ++ i){
-			html += form_fields[i].label + form_fields[i].field + "<br />";
+			$html.append(form_fields[i].label + form_fields[i].field + "<br />");
 		}
 
-		this.$wrapper.html(html);
+		this.$wrapper.append($html);
+
+		// Could use HTML 5 colour picker, but IE 11...
 
 		this.$wrapper.find("input.post-form-color-picker").colorPicker({
 

@@ -24,6 +24,7 @@ ProBoards_Post_Forms.Input = class extends ProBoards_Post_Forms.Element {
 				this.field_html = "<textarea name='input-field-" + this.id + "'></textarea>";
 
 				break;
+
 		}
 	}
 
