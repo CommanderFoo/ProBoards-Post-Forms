@@ -5,7 +5,6 @@ ProBoards_Post_Forms.Input = class extends ProBoards_Post_Forms.Element {
 
 		this.create_label();
 		this.create_field();
-
 	}
 
 	create_label(){
@@ -26,6 +25,15 @@ ProBoards_Post_Forms.Input = class extends ProBoards_Post_Forms.Element {
 				break;
 
 		}
+	}
+
+	parse(template){
+		template = template.replace("$[" + this.data.id + ".name]", this.data.name);
+		template = template.replace("$[" + this.data.id + ".field]", this.field_html);
+		template = template.replace("$[" + this.data.id + ".id]", this.data.id);
+		template = template.replace("$[" + this.data.id + ".order]", this.data.order);
+
+		return template;
 	}
 
 };

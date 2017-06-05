@@ -39,4 +39,8 @@ ProBoards_Post_Forms.Checkbox_Radio_Group = class extends ProBoards_Post_Forms.E
 		this.field_html = html;
 	}
 
+	parse(template){
+		return template;
+	}
+
 };

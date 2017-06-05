@@ -9,11 +9,11 @@ ProBoards_Post_Forms.Element = class {
 	}
 
 	create_field(){
-		console.warn("Abstract method. You need to override it in sub class with your own implementation");
+		console.warn("Abstract method \"create_field\". You need to override it in sub class with your own implementation");
 	}
 
 	create_label(){
-		console.warn("Abstract method. You need to override it in sub class with your own implementation");
+		console.warn("Abstract method \"create_label\". You need to override it in sub class with your own implementation");
 	}
 
 	get name(){
@@ -34,6 +34,10 @@ ProBoards_Post_Forms.Element = class {
 
 	get field(){
 		return this.field_html;
+	}
+
+	parse(){
+		console.warn("Abtract method \"parser\".  You need to override it in the sub class with your own implementation.");
 	}
 
 };

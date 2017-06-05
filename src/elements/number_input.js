@@ -8,10 +8,8 @@ ProBoards_Post_Forms.Number_Input = class extends ProBoards_Post_Forms.Element {
 	}
 
 	create_label(){
-		let label_for = (parseInt(this.data.type, 10) == 1)? "number" : "range";
-
-		this.field_for = label_for;
-		this.label_html = "<label for='" + label_for + "-field-" + this.id + "'>" + this.data.name + ":</label>";
+		this.field_for = (parseInt(this.data.type, 10) == 1)? "number" : "range";;
+		this.label_html = "<label for='" + this.field_for + "-field-" + this.id + "'>" + this.data.name + ":</label>";
 	}
 
 	create_field(){
@@ -22,13 +20,17 @@ ProBoards_Post_Forms.Number_Input = class extends ProBoards_Post_Forms.Element {
 
 		if(this.data.show_value){
 			this.field_html += " <span id='" + this.field_for + "-input-field-val-" + this.id + "'></span>";
-
-			//this.field_html.find("input:first")
 		}
 	}
 
-	handlers(){
+	parse(template){
+		template = template.replace("$[" + this.data.id + ".name]", this.data.name);
+		template = template.replace("$[" + this.data.id + ".id]", this.data.id);
+		template = template.replace("$[" + this.data.id + ".field]", this.field_html);
+		template = template.replace("$[" + this.data.id + ".min]", this.data.min);
+		template = template.replace("$[" + this.data.id + ".max]", this.data.max);
 
+		return template;
 	}
 
 };

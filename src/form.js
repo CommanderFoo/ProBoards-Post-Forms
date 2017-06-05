@@ -1,3 +1,11 @@
+/**
+ * @TODO: Consider passing template bool to the classes to prevent some
+ * of the assignments, as they won't be used if a template is going to be parsed.
+ *
+ * @TODO: Consider running final template through a last parser to strip left over
+ * template variables.
+ */
+
 ProBoards_Post_Forms.Form = class {
 
 	constructor(form = {}){
@@ -11,9 +19,13 @@ ProBoards_Post_Forms.Form = class {
 		this.$pb_form = this.$wysiwyg_container.find("form:first");
 		this.$pb_submit = this.$pb_form.find("input[type=submit]");
 
-		this.build_form();
+		this.using_template = false;
 
-		console.log(form.template);
+		if(this.form_data.template && this.form_data.template.length){
+			this.using_template = true;
+		}
+
+		this.build_form();
 	}
 
 	build_inputs(){
@@ -107,6 +119,7 @@ ProBoards_Post_Forms.Form = class {
 
 	build_form(){
 		let $html = $("<div></div>");
+		let template = this.form_data.template;
 		let form_fields = [];
 
 		form_fields = form_fields.concat(this.build_inputs());
@@ -124,7 +137,15 @@ ProBoards_Post_Forms.Form = class {
 		this.has_elements = true;
 
 		for(let i = 0; i < form_fields.length; ++ i){
-			$html.append(form_fields[i].label + form_fields[i].field + "<br />");
+			if(this.using_template){
+				template = form_fields[i].parse(template);
+			} else {
+				$html.append(form_fields[i].label + form_fields[i].field + "<br />");
+			}
+		}
+
+		if(this.using_template){
+			$html = $html.append(template);
 		}
 
 		this.$wrapper.append($html);

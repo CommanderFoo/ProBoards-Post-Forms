@@ -39,4 +39,15 @@ ProBoards_Post_Forms.Drop_Down = class extends ProBoards_Post_Forms.Element {
 		return options_html;
 	}
 
+	parse(template){
+		template = template.replace("$[" + this.data.id + ".name]", this.data.name);
+		template = template.replace("$[" + this.data.id + ".field]", this.field_html);
+		template = template.replace("$[" + this.data.id + ".id]", this.data.id);
+		template = template.replace("$[" + this.data.id + ".order]", this.data.order);
+		template = template.replace("$[" + this.data.id + ".multiple_size]", this.data.multiple_size);
+		template = template.replace("$[" + this.data.id + ".multiple_answers]", this.data.multiple);
+
+		return template;
+	}
+
 };

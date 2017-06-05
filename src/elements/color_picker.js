@@ -15,4 +15,11 @@ ProBoards_Post_Forms.Color_Picker = class extends ProBoards_Post_Forms.Element {
 		this.field_html = "<input type='text' name='color-picker-field-" + this.id + "' value='' placeholder='' class='post-form-color-picker' />";
 	}
 
+	parse(template){
+		template = template.replace("$[" + this.data.id + ".name]", this.data.name);
+		template = template.replace("$[" + this.data.id + ".field]", this.field_html);
+
+		return template;
+	}
+
 };
