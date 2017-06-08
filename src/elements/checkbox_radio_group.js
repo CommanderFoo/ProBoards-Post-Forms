@@ -11,7 +11,7 @@ ProBoards_Post_Forms.Checkbox_Radio_Group = class extends ProBoards_Post_Forms.E
 		let label_for = (parseInt(this.data[0].type, 10) == 1)? "checkbox" : "radio";
 
 		this.field_for = label_for;
-		this.label_html = "<label for='" + label_for + "-field-grp-" + this.id + "'>" + this.data[0].group_label + ":</label>";
+		this.label_html = "<label for='" + label_for + "-field-grp-" + this.data[0].group_id + "'>" + this.data[0].group_label + ":</label>";
 	}
 
 	create_field(){

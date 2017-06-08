@@ -8,7 +8,7 @@ ProBoards_Post_Forms.Drop_Down = class extends ProBoards_Post_Forms.Element {
 	}
 
 	create_label(){
-		this.label_html = "<label for='drop-down-field-" + this.id + "'>" + this.data.name + ":</label>";
+		this.label_html = "<label for='drop-down-field-" + this.data.id + "'>" + this.data.name + ":</label>";
 	}
 
 	create_field(){
@@ -17,7 +17,7 @@ ProBoards_Post_Forms.Drop_Down = class extends ProBoards_Post_Forms.Element {
 
 		size = (multiple.length && size)? " size='" + size + "'" : "";
 
-		this.field_html = "<select" + size + multiple + " name='drop-down-field-" + this.id + "'>" + this.create_options() + "</select>";
+		this.field_html = "<select" + size + multiple + " name='drop-down-field-" + this.data.id + "'>" + this.create_options() + "</select>";
 	}
 
 	create_options(){

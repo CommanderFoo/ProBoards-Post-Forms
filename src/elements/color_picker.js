@@ -8,11 +8,11 @@ ProBoards_Post_Forms.Color_Picker = class extends ProBoards_Post_Forms.Element {
 	}
 
 	create_label(){
-		this.label_html = "<label for='color-picker-field-" + this.id + "'>" + this.data.name + ":</label>";
+		this.label_html = "<label for='color-picker-field-" + this.data.id + "'>" + this.data.name + ":</label>";
 	}
 
 	create_field(){
-		this.field_html = "<input type='text' name='color-picker-field-" + this.id + "' value='' placeholder='' class='post-form-color-picker' />";
+		this.field_html = "<input type='text' name='color-picker-field-" + this.data.id + "' value='' placeholder='' class='post-form-color-picker' />";
 	}
 
 	parse(template){
