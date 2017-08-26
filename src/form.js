@@ -174,6 +174,8 @@ ProBoards_Post_Forms.Form = class {
 		if(this.has_elements){
 			this.$title.html(this.form_data.title);
 			this.$pb_form.hide();
+			this.create_reset_button();
+			this.create_submit_button();
 			this.$content_container.append(this.$wrapper);
 		}
 	}
